@@ -45,9 +45,18 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  bool emailPrideConfirmed(){
+    if(_emailController.text.trim().contains("@pride.hofstra.edu")){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   Future signUp() async{
     // authenticate user
-    if (passwordConfirmed()) {
+    if (passwordConfirmed() && emailPrideConfirmed()) {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
     email: _emailController.text.trim(), 
     password: _passwordController.text.trim()
@@ -60,6 +69,29 @@ class _RegisterPageState extends State<RegisterPage> {
       _usernameController.text.trim(), 
       _emailController.text.trim());
 
+    }
+    else{
+      if( passwordConfirmed() && !emailPrideConfirmed()) {
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("Email is not a pride email, try again"),
+        );
+      });
+      }
+      if(!passwordConfirmed() && emailPrideConfirmed()){
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("Passwords do not match, try again"),
+        );
+      });
+      }
+      if(!passwordConfirmed() && !emailPrideConfirmed()){
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("Passwords do not match and email is not a pride email, try again"),
+        );
+      });
+      }
     }
   }
 

@@ -56,47 +56,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<String> topAnimesreference = []; 
-
-  //get animeNames
-  Future getanimeName() async {
-    await FirebaseFirestore.instance.collection('animes')
-    .where('email', isEqualTo: user.email)
-    .get().then(
-      (snapshot) => snapshot.docs.forEach(
-        (document) {
-          print(document.reference.id);
-          topAnimesreference.add(document.reference.id);
-        },
-      ),
-    );
-  }
-
-
-  Future CreateAnimeList() async {
-    await getanimeName();
-  }
-
-  List<String> topAnimesNotesreference = []; 
-
-  //get animeNames
-  Future getanimeNotes() async {
-    await FirebaseFirestore.instance.collection('animes')
-    .where('email', isEqualTo: user.email)
-    .get().then(
-      (snapshot) => snapshot.docs.forEach(
-        (document) {
-          print(document.reference.id);
-          topAnimesNotesreference.add(document.reference.id);
-        },
-      ),
-    );
-  }
-
-  Future CreateNotesList() async {
-    await getanimeNotes();
-  }
-
 
   @override
   Widget build(BuildContext context){
@@ -132,232 +91,32 @@ class _HomePageState extends State<HomePage> {
           )],
       ),
 
+      body: Center(
+          child: ListView(children: <Widget>[
+        Container(
+            padding: const EdgeInsets.all(10),
+            child: const ButtonBar(
+              alignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize
+                  .min, // this will take space as minimum as posible(to center)
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: null, // route to listings page
+                  child: Text('My Listings'),
+                ),
+                ElevatedButton(
+                  onPressed: null, // route to home page ... this page ...
+                  child: Text('Home'),
+                ),
+                ElevatedButton(
+                  onPressed: null, // route to account page
+                  child: Text('My Account'),
+                ),
+              ],
+            ),),],),),
 
 
-      body: 
-      
-      
-      
-      
-    RefreshIndicator(
-        onRefresh: () { return Future.delayed(Duration (seconds: 1));},
-        child: 
-        Center(
-          child: Column(
-      
-        children: [
-
-         Expanded(
-               child: FutureBuilder(
-                 future: CreateAnimeList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime1Name(anime1Name: topAnimesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height:20);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-
-        Expanded(
-               child: FutureBuilder(
-                 future: CreateNotesList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime1Note(anime1Note: topAnimesNotesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height:20);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-      
-         Expanded(
-               child: FutureBuilder(
-                 future: CreateAnimeList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime2Name(anime2Name: topAnimesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height:10);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-
-        Expanded(
-               child: FutureBuilder(
-                 future: CreateNotesList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime2Note(anime2Note: topAnimesNotesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height:20);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-      
-      
-         Expanded(
-               child: FutureBuilder(
-                 future: CreateAnimeList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime3Name(anime3Name: topAnimesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height: 10,);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-
-        Expanded(
-               child: FutureBuilder(
-                 future: CreateNotesList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime3Note(anime3Note: topAnimesNotesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height:20);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-      
-         Expanded(
-               child: FutureBuilder(
-                 future: CreateAnimeList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime4Name(anime4Name: topAnimesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height:10);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-
-        Expanded(
-               child: FutureBuilder(
-                 future: CreateNotesList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime4Note(anime4Note: topAnimesNotesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height:20);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-      
-         Expanded(
-               child: FutureBuilder(
-                 future: CreateAnimeList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime5Name(anime5Name: topAnimesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height:10);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-
-        Expanded(
-               child: FutureBuilder(
-                 future: CreateNotesList(),
-                 builder:(context, snapshot) {
-                   return ListView.builder(
-                     itemCount: 1,
-                     itemBuilder: ((context, index) {
-                      if(topAnimesreference.isNotEmpty){
-                       return ListTile(
-                         title: Getanime5Note(anime5Note: topAnimesNotesreference[0],),
-                       );
-                      }
-                      else{
-                        return SizedBox(height:20);
-                      }
-                     }),);
-                 },
-               ),
-             ),
-
-        
-
-              
-        ]
-      
-        ),
-      
-          ),
-      )
-    );
+      );
     
   }
 
