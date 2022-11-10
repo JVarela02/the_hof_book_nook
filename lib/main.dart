@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/login_page.dart';
+import 'pages/sign ins/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'auth/main_page.dart';
 
@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
       title: 'Anime Connect',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-        primary: const Color.fromARGB(255, 145, 132, 229),
-        secondary:Color.fromARGB(6, 117, 210, 169),
+        primary: Color.fromARGB(255, 105, 173, 222),
+        secondary:Color.fromARGB(255, 0, 12, 81),
       ), ),
       //home: LoginPage(showRegisterPage: () {  },),
       home: MainPage(),

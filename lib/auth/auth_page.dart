@@ -1,5 +1,5 @@
-import 'package:the_hof_book_nook/pages/login_page.dart';
-import 'package:the_hof_book_nook/pages/register_page.dart';
+import 'package:the_hof_book_nook/pages/sign%20ins/login_page.dart';
+import 'package:the_hof_book_nook/pages/sign%20ins/register_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {

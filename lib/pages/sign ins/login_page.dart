@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../main.dart';
+import '../../main.dart';
 import 'forgot_pw_page.dart';
  
 class LoginPage extends StatefulWidget {
@@ -66,13 +66,24 @@ class _LoginPageState extends State<LoginPage> {
                   // const SizedBox(height:5),
          
                   //hello children
-                  Text(
-                    "Welcome Back!",
-                    style: GoogleFonts.bigShouldersInlineDisplay(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
+                  Column(
+                    children: [
+                      Text(
+                        "Welcome",
+                        style: GoogleFonts.bigShouldersInlineDisplay(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        ),
+                       Text(
+                        "Back!",
+                        style: GoogleFonts.bigShouldersInlineDisplay(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        ),
+                    ],
+                  ),
          
                   
                 ],
@@ -95,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 227, 227, 243),
+                    color: Color.fromARGB(255, 207, 230, 247),
                     border: Border.all(color: const Color.fromARGB(255, 235, 235, 235),
                     width: 3),
                     borderRadius: BorderRadius.circular(6),
@@ -120,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 227, 227, 243),
+                    color: Color.fromARGB(255, 207, 230, 247),
                     border: Border.all(color: const Color.fromARGB(255, 235, 235, 235),
                     width: 3),
                     borderRadius: BorderRadius.circular(6),
@@ -166,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: const Text(" Reset Here",
                         style: TextStyle(
-                          color: Color.fromARGB(255, 145, 132, 229),
+                          color: Color.fromARGB(255, 105, 173, 222),
                           fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -183,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 50,
                   width: 110,
                   decoration: BoxDecoration(
-                    color:Color.fromARGB(255, 145, 132, 229),
+                    color:Color.fromARGB(255, 105, 173, 222),
                     border: Border.all(color: Colors.white,
                       width: 3),
                       borderRadius: BorderRadius.circular(6),
@@ -213,7 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: widget.showRegisterPage,
                       child: const Text(" Register Now",
                         style: TextStyle(
-                          color: Color.fromARGB(255, 145, 132, 229),
+                          color: Color.fromARGB(255, 105, 173, 222),
                           fontWeight: FontWeight.bold,
                           ),
                         ),

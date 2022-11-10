@@ -116,6 +116,7 @@ class _RegisterPageState extends State<RegisterPage> {
               children: [
 
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('assets/images/logo.png',
                   scale: 3,
@@ -125,13 +126,24 @@ class _RegisterPageState extends State<RegisterPage> {
              
          
                   //hello children
-                  Text(
-                    "Nice to Meet You!",
-                    style: GoogleFonts.bigShouldersInlineDisplay(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
+                  Column(
+                    children: [
+                      Text(
+                        "Nice to",
+                        style: GoogleFonts.bigShouldersInlineDisplay(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        ),
+                       Text(
+                        "Meet You!",
+                        style: GoogleFonts.bigShouldersInlineDisplay(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        ),
+                    ],
+                  ),
                 ],
               ),
          
@@ -153,7 +165,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 227, 227, 243),
+                    color: Color.fromARGB(255, 207, 230, 247),
                     border: Border.all(color: Color.fromARGB(255, 235, 235, 235),
                     width: 3),
                     borderRadius: BorderRadius.circular(6),
@@ -178,7 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 227, 227, 243),
+                    color: Color.fromARGB(255, 207, 230, 247),
                     border: Border.all(color: Color.fromARGB(255, 235, 235, 235),
                     width: 3),
                     borderRadius: BorderRadius.circular(6),
@@ -203,7 +215,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 227, 227, 243),
+                    color: Color.fromARGB(255, 207, 230, 247),
                     border: Border.all(color: Color.fromARGB(255, 235, 235, 235),
                     width: 3),
                     borderRadius: BorderRadius.circular(6),
@@ -229,7 +241,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 227, 227, 243),
+                    color: Color.fromARGB(255, 207, 230, 247),
                     border: Border.all(color: Color.fromARGB(255, 235, 235, 235),
                     width: 3),
                     borderRadius: BorderRadius.circular(6),
@@ -254,7 +266,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 227, 227, 243),
+                    color: Color.fromARGB(255, 207, 230, 247),
                     border: Border.all(color: Color.fromARGB(255, 235, 235, 235),
                     width: 3),
                     borderRadius: BorderRadius.circular(6),
@@ -279,7 +291,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 227, 227, 243),
+                    color: Color.fromARGB(255, 207, 230, 247),
                     border: Border.all(color: Color.fromARGB(255, 235, 235, 235),
                     width: 3),
                     borderRadius: BorderRadius.circular(6),
@@ -307,7 +319,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 50,
                   width: 110,
                   decoration: BoxDecoration(
-                    color:Color.fromARGB(255, 145, 132, 229),
+                    color:Color.fromARGB(255, 105, 173, 222),
                     border: Border.all(color: Colors.white,
                       width: 3),
                       borderRadius: BorderRadius.circular(6),
@@ -337,7 +349,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onTap: widget.showLoginPage,
                       child: const Text(" Login Now",
                         style: TextStyle(
-                          color: Color.fromARGB(255, 145, 132, 229),
+                          color: Color.fromARGB(255, 105, 173, 222),
                           fontWeight: FontWeight.bold,
                           ),
                         ),
