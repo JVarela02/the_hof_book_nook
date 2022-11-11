@@ -32,21 +32,59 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
     super.dispose();
   }
 
-  Future textbookUpload() async {
-    if(_conditionController.text.toLowerCase() == "like new" || _conditionController.text.toLowerCase() == "slightly used" || _conditionController.text.toLowerCase() == "acceptable")
-    {textbookToFirebase(
-      user.email.toString(),
-      _isbnInputController.text.toString(), 
-      _conditionController.text.toLowerCase(),
-      _priceController.text.toString(),);
-    return const AlertDialog(
-      content: Text("Textbook Uploaded"),
-    );}
-
+  bool isbnLengthCorrect(){
+    if(_isbnInputController.text.toString().length == 13 || _isbnInputController.text.toString().length == 10){
+      return true;
+    }
     else{
-      return const AlertDialog(
-          content: Text("Condition is not correct"),
+      return false;
+    }
+  }
+
+  bool conditionCorrect(){
+    if(_conditionController.text.toString().toLowerCase() == "like new" || _conditionController.text.toString().toLowerCase() == "slightly used" || _conditionController.text.toString().toLowerCase() == "acceptable") {
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  Future textbookUpload() async {
+    if (isbnLengthCorrect() && conditionCorrect()) {
+      textbookToFirebase(
+        user.email.toString(),
+        _isbnInputController.text.toString(), 
+        _conditionController.text.toLowerCase(),
+        _priceController.text.toString(),);
+      showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("Textbook Uploaded"),
         );
+      });
+    }
+    else{
+      if(isbnLengthCorrect() && !conditionCorrect()){
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("Condition is not correct. Please make sure it says either 'like new', 'slightly used', or 'acceptable' and try again"),
+        );
+      });
+      }
+      if(!isbnLengthCorrect() && conditionCorrect()){
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("ISBN number is not valid. Please make sure that the length is either 10 or 13 characters long and try again"),
+        );
+      });
+      }
+      else{
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("ISBN number and Condition are not valid. Please make sure it says either 'like new', 'slightly used', or 'acceptable' and that the length is either 10 or 13 characters long and try again "),
+        );
+      });
+      }
     }
   }
 
