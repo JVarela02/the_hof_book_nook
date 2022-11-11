@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Username/ Email address",
+                        hintText: "Pride Email",
                       ),
                     ),
                   ),

@@ -54,9 +54,18 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  bool usernameConfirmed(){
+    if(_usernameController.text.trim().toLowerCase().contains("h7")){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   Future signUp() async{
     // authenticate user
-    if (passwordConfirmed() && emailPrideConfirmed()) {
+    if (passwordConfirmed() && emailPrideConfirmed() && usernameConfirmed()) {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
     email: _emailController.text.trim(), 
     password: _passwordController.text.trim()
@@ -66,29 +75,57 @@ class _RegisterPageState extends State<RegisterPage> {
     addUserDetails(
       _firstnameController.text.trim(), 
       _lastnameController.text.trim(), 
-      _usernameController.text.trim(), 
+      _usernameController.text.trim().toLowerCase(), 
       _emailController.text.trim());
 
     }
     else{
-      if( passwordConfirmed() && !emailPrideConfirmed()) {
+      if( usernameConfirmed() && passwordConfirmed() && !emailPrideConfirmed()) {
         showDialog(context: context, builder: (context){
         return const AlertDialog(
           content: Text("Email is not a pride email, try again"),
         );
       });
       }
-      if(!passwordConfirmed() && emailPrideConfirmed()){
+      if(usernameConfirmed() && !passwordConfirmed() && emailPrideConfirmed()){
         showDialog(context: context, builder: (context){
         return const AlertDialog(
           content: Text("Passwords do not match, try again"),
         );
       });
       }
-      if(!passwordConfirmed() && !emailPrideConfirmed()){
+      if(!usernameConfirmed() && passwordConfirmed() && emailPrideConfirmed()) {
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("700# must have leading h, try again"),
+        );
+      });
+      }
+      if(usernameConfirmed() && !passwordConfirmed() && !emailPrideConfirmed()){
         showDialog(context: context, builder: (context){
         return const AlertDialog(
           content: Text("Passwords do not match and email is not a pride email, try again"),
+        );
+      });
+      }
+      if(!usernameConfirmed() && passwordConfirmed() && !emailPrideConfirmed()) {
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("Email is not a pride email and 700# does not have leading h, try again"),
+        );
+      });
+      }
+      if(!usernameConfirmed() && !passwordConfirmed() && emailPrideConfirmed()){
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("Passwords do not match and 700# does not have leading h, try again"),
+        );
+      });
+      }
+      if(!usernameConfirmed() && !passwordConfirmed() && !emailPrideConfirmed()){
+        showDialog(context: context, builder: (context){
+        return const AlertDialog(
+          content: Text("Passwords do not match and email is not a pride email and username does not have leading h, try again"),
         );
       });
       }

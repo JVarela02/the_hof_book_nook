@@ -54,51 +54,50 @@ class _MyListingsPageState extends State<MyListingsPage> {
 
 
     body: 
-    // // Center(
-    // //     child: ListView(children: <Widget>[
-    // //     Container(
-    // //         padding: const EdgeInsets.all(10),
-    // //         child: ButtonBar(
-    // //           alignment: MainAxisAlignment.center,
-    // //           mainAxisSize: MainAxisSize
-    // //               .min, // this will take space as minimum as posible(to center)
-    // //           children: <Widget>[
-    // //             ElevatedButton(
-    // //               onPressed: () {
-    // //                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-    // //                return HomePage();
-    // //                 }));
-    // //               }, // "route" to home page 
-    // //               child: 
-    // //                 Text('Home'),
-    // //             ),
-    // //             ElevatedButton(
-    // //               onPressed: () {
-    // //                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-    // //                return MyListingsPage();
-    // //                 }));
-    // //               }, // route to my page ... this page ...
-    // //               child: Text('My Listings', 
-    // //                 style: TextStyle(fontWeight: FontWeight.w900),),
-    // //             ),
-    // //             ElevatedButton(
-    // //               onPressed: () {
-    // //                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-    // //                return accountPage();
-    // //                 }));
-    // //               }, // route to account page
-    // //               child: Text('My Account'),
-    // //             ),
-    // //           ],
-    // //         ),),],),),
+     Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+         children: [
+         //ListView(children: <Widget>[
+         Container(
+             padding: const EdgeInsets.all(10),
+             child: 
+                ButtonBar(
+               alignment: MainAxisAlignment.center,
+               mainAxisSize: MainAxisSize
+                   .min, // this will take space as minimum as posible(to center)
+               children: <Widget>[
+                 ElevatedButton(
+                   onPressed: () {
+                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                    return HomePage();
+                     }));
+                   }, // "route" to home page 
+                   child: 
+                     Text('Home'),
+                 ),
+                 ElevatedButton(
+                   onPressed: () {
+                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                    return MyListingsPage();
+                     }));
+                   }, // route to my page ... this page ...
+                   child: Text('My Listings', 
+                     style: TextStyle(fontWeight: FontWeight.w900),),
+                 ),
+                 ElevatedButton(
+                   onPressed: () {
+                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                    return accountPage();
+                     }));
+                   }, // route to account page
+                   child: Text('My Account'),
+                 ),
+               ],
+             ),),
+             //],),
 
+            SizedBox(height:10,),
 
-           SizedBox(
-             child: Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: Center(
-                 child: Column(
-                   children: [
                      Expanded(
                        child: FutureBuilder(
                        future: getTextbooks(),
@@ -108,8 +107,11 @@ class _MyListingsPageState extends State<MyListingsPage> {
                            itemBuilder: ((context, index) {
                            if(myListingRefernces.isNotEmpty){
                              return ListTile(
-                               title: GetTextbook(textbookForSale: myListingRefernces[index],),
-                               subtitle: GetPrice(priceForSale: myListingRefernces[index]),
+                               leading: Icon(Icons.camera_alt_rounded), // This will turn into photo of textbook
+                               title: GetTextbook(textbookForSale: myListingRefernces[index],), //Once API is added this would turn into Title
+                               subtitle: GetPrice(priceForSale: myListingRefernces[index]), 
+                               trailing: Icon(Icons.square_outlined,),
+                               onTap: null, // Will be used for "In Negotiations" if done
                                );
                              }
                            else{
@@ -118,16 +120,8 @@ class _MyListingsPageState extends State<MyListingsPage> {
                            }),);
                             },
                           ),
-                        ),
-                   ],
-                 ),
-               ),
-             ),
-           ),
-        
-      
-
-
+                     ),
+    ],),
     );
   }
 }
