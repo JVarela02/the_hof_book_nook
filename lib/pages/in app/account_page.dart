@@ -135,8 +135,7 @@ class _accountPageState extends State<accountPage> {
                         ),);},
                 child: Text("Add Listing",
                   style: TextStyle(color: Colors.white),
-                ),  
-                        
+                ),      
               ),
             ),
           
@@ -146,11 +145,23 @@ class _accountPageState extends State<accountPage> {
               height: 60,
               width: 300,
               child: ElevatedButton( 
+                onPressed: null,
+                child: Text("Remove Listing",
+                  style: TextStyle(color: Colors.white),
+                ),         
+              ),
+            ),
+
+          SizedBox(height: 30,),
+
+            SizedBox(
+              height: 60,
+              width: 300,
+              child: ElevatedButton( 
                 onPressed: signout,
                 child: Text("Sign Out",
                   style: TextStyle(color: Colors.white),
-                ),  
-                        
+                ),         
               ),
             ),
 
