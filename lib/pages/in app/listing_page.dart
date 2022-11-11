@@ -15,12 +15,6 @@ class MyListingsPage extends StatefulWidget {
 
 class _MyListingsPageState extends State<MyListingsPage> {
 
-  signout(){
-    FirebaseAuth.instance.signOut();
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-      return LoginPage(showRegisterPage: () {  },);
-        },),);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +30,6 @@ class _MyListingsPageState extends State<MyListingsPage> {
               ),
            ),
          ),
-         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-              onTap: () {
-                // FirebaseAuth.instance.signOut();
-                signout();},
-                child: const Text("Logout",
-                style: TextStyle(
-                  color : Colors.white,
-                  fontWeight: FontWeight.bold,
-                ))
-                     ),
-            ),
-          )],
     ),
 
 
@@ -81,7 +58,7 @@ class _MyListingsPageState extends State<MyListingsPage> {
                     }));
                   }, // route to my page ... this page ...
                   child: Text('My Listings', 
-                    style: TextStyle(fontWeight: FontWeight.bold),),
+                    style: TextStyle(fontWeight: FontWeight.w900),),
                 ),
                 ElevatedButton(
                   onPressed: () {

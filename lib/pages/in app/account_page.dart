@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:the_hof_book_nook/pages/in%20app/home_page.dart';
 import 'package:the_hof_book_nook/pages/in%20app/listing_page.dart';
+import 'package:the_hof_book_nook/pages/in%20app/txtinput_page.dart';
 import 'package:the_hof_book_nook/pages/sign%20ins/login_page.dart';
 
 class accountPage extends StatefulWidget {
@@ -75,60 +76,89 @@ class _accountPageState extends State<accountPage> {
               ),
            ),
          ),
-         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-              onTap: () {
-                signout();},
-                child: const Text("Logout",
-                style: TextStyle(
-                  color : Colors.white,
-                  fontWeight: FontWeight.bold,
-                ))
-                     ),
-            ),
-          )],
     ),
 
-  body: Center(
-          child: ListView(children: <Widget>[
-        Container(
-            padding: const EdgeInsets.all(10),
-            child: ButtonBar(
-              alignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize
-                  .min, // this will take space as minimum as posible(to center)
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                   return HomePage();
-                    }));
-                  }, // route to account page
-                  child: Text('Home'),
+  body: 
+      Center(
+        child: Column(
+          children: [
+            Container(
+                padding: const EdgeInsets.all(10),
+                child: ButtonBar(
+                  alignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize
+                      .min, // this will take space as minimum as posible(to center)
+                  children: <Widget>[
+                    ElevatedButton(
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                       return HomePage();
+                        }));
+                      }, // route to account page
+                      child: Text('Home'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                       return MyListingsPage();
+                        }));
+                      }, // route to my page ... this page ...
+                      child: Text('My Listings'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                       return accountPage();
+                        }));
+                      },
+                      child: Text('My Account', 
+                      style: TextStyle(fontWeight: FontWeight.bold),),
+                    ),
+                  ],
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                   return MyListingsPage();
-                    }));
-                  }, // route to my page ... this page ...
-                  child: Text('My Listings'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                   return accountPage();
-                    }));
-                  },
-                  child: Text('My Account', 
-                  style: TextStyle(fontWeight: FontWeight.bold),),
-                ),
-              ],
-            ),),],),),
+            ),
+           
+
+          SizedBox(height: 30,),
+
+            SizedBox(
+              height: 60,
+              width: 300,
+              child: ElevatedButton( 
+                onPressed: () {
+                   Navigator.push(
+                     context, 
+                        MaterialPageRoute(
+                           builder: (context) {
+                           return TextbookInputPage();
+                          },
+                        ),);},
+                child: Text("Add Listing",
+                  style: TextStyle(color: Colors.white),
+                ),  
+                        
+              ),
+            ),
+          
+          SizedBox(height: 30,),
+
+            SizedBox(
+              height: 60,
+              width: 300,
+              child: ElevatedButton( 
+                onPressed: signout,
+                child: Text("Sign Out",
+                  style: TextStyle(color: Colors.white),
+                ),  
+                        
+              ),
+            ),
+
+
+          ],
+        ),
+
+      ),
 
     );
   }

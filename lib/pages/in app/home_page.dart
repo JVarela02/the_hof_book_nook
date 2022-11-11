@@ -23,12 +23,7 @@ class _HomePageState extends State<HomePage> {
 
   final user = FirebaseAuth.instance.currentUser!;
 
-  signout(){
-    FirebaseAuth.instance.signOut();
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-      return LoginPage(showRegisterPage: () {  },);
-        },),);
-  }
+
 
   @override
   Widget build(BuildContext context){
@@ -44,24 +39,6 @@ class _HomePageState extends State<HomePage> {
               ),
            ),
          ),
-
-         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-              onTap: () {
-              signout();
-              },
-                child: const Text("Logout",
-                style: TextStyle(
-                  color : Colors.white,
-                  fontWeight: FontWeight.bold,
-                ))
-                     ),
-            ),
-          )],
       ),
 
       body: Center(
@@ -81,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                   }, // "route" to home page 
                   child: 
                     Text('Home', 
-                    style: TextStyle(fontWeight: FontWeight.bold),),
+                    style: TextStyle(fontWeight: FontWeight.w900),),
                   
                 ),
                 ElevatedButton(
