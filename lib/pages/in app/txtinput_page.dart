@@ -33,7 +33,7 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
   }
 
   bool isbnLengthCorrect(){
-    if(_isbnInputController.text.toString().length == 13 || _isbnInputController.text.toString().length == 10){
+    if(_isbnInputController.text.toString().trim().length == 13 || _isbnInputController.text.toString().length == 10){
       return true;
     }
     else{
@@ -78,7 +78,7 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
         );
       });
       }
-      else{
+      if(!isbnLengthCorrect() && !conditionCorrect()){
         showDialog(context: context, builder: (context){
         return const AlertDialog(
           content: Text("ISBN number and Condition are not valid. Please make sure it says either 'like new', 'slightly used', or 'acceptable' and that the length is either 10 or 13 characters long and try again "),

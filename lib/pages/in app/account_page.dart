@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:the_hof_book_nook/pages/in%20app/home_page.dart';
 import 'package:the_hof_book_nook/pages/in%20app/listing_page.dart';
+import 'package:the_hof_book_nook/pages/in%20app/removetxt_page.dart';
 import 'package:the_hof_book_nook/pages/in%20app/txtinput_page.dart';
 import 'package:the_hof_book_nook/pages/sign%20ins/login_page.dart';
 
@@ -145,7 +146,14 @@ class _accountPageState extends State<accountPage> {
               height: 60,
               width: 300,
               child: ElevatedButton( 
-                onPressed: null,
+                onPressed: () {
+                   Navigator.push(
+                     context, 
+                        MaterialPageRoute(
+                           builder: (context) {
+                           return RemoveTextbookPage();
+                          },
+                        ),);},
                 child: Text("Remove Listing",
                   style: TextStyle(color: Colors.white),
                 ),         
