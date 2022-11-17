@@ -21,7 +21,7 @@ class _MyListingsPageState extends State<MyListingsPage> {
 
   List<String> myListingRefernces = []; 
 
-  //get animeNames
+  //get textbooks
   Future getTextbooks() async {
     await FirebaseFirestore.instance.collection('textbooks')
     .where('Seller', isEqualTo: user.email)
@@ -52,6 +52,30 @@ class _MyListingsPageState extends State<MyListingsPage> {
               ),
            ),
          ),
+
+         actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+              onTap: () async {
+                FirebaseAuth.instance.signOut();
+                Navigator.popUntil(context, (route) => false);
+                Navigator.push(context,MaterialPageRoute(
+                           builder: (context) {
+                           return LoginPage(showRegisterPage: () {  },);
+                          },
+                        ), );
+              },
+                child: const Text("Logout",
+                style: TextStyle(
+                  color : Colors.white,
+                  fontWeight: FontWeight.bold,
+                ))
+                     ),
+            ),
+          )],
     ),
 
 
@@ -79,6 +103,7 @@ class _MyListingsPageState extends State<MyListingsPage> {
                  ),
                  ElevatedButton(
                    onPressed: () {
+                    Navigator.of(context).pop();
                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
                     return MyListingsPage();
                      }));

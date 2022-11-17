@@ -12,8 +12,6 @@ class GetTextbook extends StatelessWidget {
     //get the collection
     CollectionReference textbooks = FirebaseFirestore.instance.collection('textbooks');
 
-
-
     return FutureBuilder<DocumentSnapshot>(
       future: textbooks.doc(textbookForSale).get(),
       builder: ((context, snapshot) 
@@ -40,8 +38,6 @@ class GetPrice extends StatelessWidget {
     //get the collection
     CollectionReference textbooks = FirebaseFirestore.instance.collection('textbooks');
 
-
-
     return FutureBuilder<DocumentSnapshot>(
       future: textbooks.doc(priceForSale).get(),
       builder: ((context, snapshot) 
@@ -57,3 +53,28 @@ class GetPrice extends StatelessWidget {
   }
 }
 
+class GetCondition extends StatelessWidget {
+  final String conditionForSale;
+
+  GetCondition({required this.conditionForSale});
+
+  @override
+  Widget build(BuildContext context) {
+
+    //get the collection
+    CollectionReference textbooks = FirebaseFirestore.instance.collection('textbooks');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: textbooks.doc(conditionForSale).get(),
+      builder: ((context, snapshot) 
+    {
+      if(snapshot.connectionState == ConnectionState.done) {
+        Map<String,dynamic> data = 
+          snapshot.data!.data() as Map<String, dynamic>;
+        return Text('${data['Condition']} ',);
+      }
+      return Text('Loading ...');
+    }),
+    );
+  }
+}

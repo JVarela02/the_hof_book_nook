@@ -17,72 +17,94 @@ class RemoveTextbookPage extends StatefulWidget {
 }
 
 class _RemoveTextbookPageState extends State<RemoveTextbookPage> {
-
   final user = FirebaseAuth.instance.currentUser!;
 
-  List<String> myListingRefernces = []; 
+  List<String> myListingRefernces = [];
 
-  //get animeNames
+  //get textbooks
   Future getTextbooks() async {
-    await FirebaseFirestore.instance.collection('textbooks')
-    .where('Seller', isEqualTo: user.email)
-    .get().then(
-      (snapshot) => snapshot.docs.forEach(
-        (document) {
-          print(document.reference.id);
-          myListingRefernces.add(document.reference.id);
-        },
-      ),
-    );
+    await FirebaseFirestore.instance
+        .collection('textbooks')
+        .where('Seller', isEqualTo: user.email)
+        .get()
+        .then(
+          (snapshot) => snapshot.docs.forEach(
+            (document) {
+              print(document.reference.id);
+              myListingRefernces.add(document.reference.id);
+            },
+          ),
+        );
   }
-
-  
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-         const FittedBox(
-           child: Padding(
-             padding: EdgeInsets.only(left: 1.0),
-             child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Remove Textbook")
-              ),
-           ),
-         ),
-    ),
-
-
-    body: 
-     Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: FutureBuilder(
-            future: getTextbooks(),
-            builder:(context, snapshot) {
-              return ListView.builder(
-                itemCount: myListingRefernces.length,
-                itemBuilder: ((context, index) {
-                if(myListingRefernces.isNotEmpty){
-                 return ListTile(
-                  leading: Icon(Icons.camera_alt_rounded), // This will turn into photo of textbook
-                  title: GetTextbook(textbookForSale: myListingRefernces[index],), //Once API is added this would turn into Title
-                  subtitle: GetPrice(priceForSale: myListingRefernces[index]), 
-                  onTap: null, // Remove Textbook Function
-                 );
-                }
-                else{
-                 return SizedBox(height:20);
-                }
-                }),);
-            },
+        title: const FittedBox(
+          child: Padding(
+            padding: EdgeInsets.only(left: 1.0),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Remove Textbook")),
           ),
         ),
-    ],),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: FutureBuilder(
+              future: getTextbooks(),
+              builder: (context, snapshot) {
+                return ListView.builder(
+                  itemCount: myListingRefernces.length,
+                  itemBuilder: ((context, index) {
+                    String docIdTobeDeleted = myListingRefernces[index];
+                    if (myListingRefernces.isNotEmpty) {
+                      return ListTile(
+                          leading: Icon(Icons
+                              .camera_alt_rounded), // This will turn into photo of textbook
+                          title: GetTextbook(
+                            textbookForSale: myListingRefernces[index],
+                          ), //Once API is added this would turn into Title
+                          subtitle:
+                              GetPrice(priceForSale: myListingRefernces[index]),
+                          trailing: Icon(Icons.delete_forever_outlined),
+                          onTap: () async {
+                            try {
+                              FirebaseFirestore.instance
+                                  .collection("textbooks")
+                                  .doc(docIdTobeDeleted)
+                                  .delete()
+                                  .then((_) {
+                                print("Successfly deleted textbook.");
+                              });
+                              Navigator.of(context).pop();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return RemoveTextbookPage();
+                                  },
+                                ),
+                              );
+                            } catch (e) {
+                              print("Error deleting textbook.");
+                            }
+                          }
+                          // Remove Textbook Function
+                          );
+                    } else {
+                      return SizedBox(height: 20);
+                    }
+                  }),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

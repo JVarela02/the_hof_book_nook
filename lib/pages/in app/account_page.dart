@@ -56,13 +56,6 @@ class _accountPageState extends State<accountPage> {
     );
   }
 
-  signout(){
-    FirebaseAuth.instance.signOut();
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-      return LoginPage(showRegisterPage: () {  },);
-        },),);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +70,30 @@ class _accountPageState extends State<accountPage> {
               ),
            ),
          ),
+
+         actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+              onTap: () async {
+                FirebaseAuth.instance.signOut();
+                Navigator.popUntil(context, (route) => false);
+                Navigator.push(context,MaterialPageRoute(
+                           builder: (context) {
+                           return LoginPage(showRegisterPage: () {  },);
+                          },
+                        ), );
+              },
+                child: const Text("Logout",
+                style: TextStyle(
+                  color : Colors.white,
+                  fontWeight: FontWeight.bold,
+                ))
+                     ),
+            ),
+          )],
     ),
 
   body: 
@@ -108,6 +125,7 @@ class _accountPageState extends State<accountPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        Navigator.of(context).pop();
                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
                        return accountPage();
                         }));
@@ -162,16 +180,16 @@ class _accountPageState extends State<accountPage> {
 
           SizedBox(height: 30,),
 
-            SizedBox(
-              height: 60,
-              width: 300,
-              child: ElevatedButton( 
-                onPressed: signout,
-                child: Text("Sign Out",
-                  style: TextStyle(color: Colors.white),
-                ),         
-              ),
-            ),
+            // SizedBox(
+            //   height: 60,
+            //   width: 300,
+            //   child: ElevatedButton( 
+            //     onPressed: signout,
+            //     child: Text("Sign Out",
+            //       style: TextStyle(color: Colors.white),
+            //     ),         
+            //   ),
+            // ),
 
 
           ],
