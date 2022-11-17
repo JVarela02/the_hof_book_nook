@@ -63,7 +63,7 @@ class _RemoveTextbookPageState extends State<RemoveTextbookPage> {
                     String docIdTobeDeleted = myListingRefernces[index];
                     if (myListingRefernces.isNotEmpty) {
                       return ListTile(
-                          leading: Icon(Icons
+                          leading: const Icon(Icons
                               .camera_alt_rounded), // This will turn into photo of textbook
                           title: GetTextbook(
                             textbookForSale: myListingRefernces[index],
