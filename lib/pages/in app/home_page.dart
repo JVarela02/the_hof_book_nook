@@ -2,6 +2,8 @@
 
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:the_hof_book_nook/auth/auth_page.dart';
 import 'package:the_hof_book_nook/pages/in%20app/account_page.dart';
@@ -13,8 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:the_hof_book_nook/read%20data/get_textbook_info.dart';
 import '../sign ins/login_page.dart';
 import '../sign ins/register_page.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -233,39 +234,37 @@ class _ResultsPageState extends State<ResultsPage> {
         );
   }
 
-  Future<String> sendEmail(String index) async {
-    final smtpServer = gmail('HofBookNook@gmail.com', 'Password190!');
-    final email = GetEmail(sellerEmail: index);
-    getUsers();
-    // Creating the Gmail server
+  Future sendEmail({
+    required String name,
+    required String email,
+    required String textbook,
+    required String selleremail,
+  }) async {
+    final serviceId = 'service_1lu743t';
+    final templateId = 'template_8tyuraq';
+    final userId = 'O7K884SMxRo1npb9t';
 
-    // Create our email message.
-    final message = Message()
-      ..from = Address('HofBookNook@gmail.com')
-      ..recipients.add(email) //recipent email
-      ..subject =
-          'Someone is interested in your Textbook!' //subject of the email
-      ..text =
-          // ignore: prefer_interpolation_to_compose_strings
-          'Hello!\n\n' +
-              'is interested in purchasing your copy of ' +
-              GetFullName(fullName: userreference[0])
-                  .toString() + // Add textbook title
-              ". Please let them know if it is still available by emailing them at " +
-              user.email! +
-              "! \n\nThank you,\n Hof Book Nook Team"; //body of the email
+    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+    final response = await http.post(
+      url,
+      headers: {
+        'origin': 'http://localhost',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'service_id': serviceId,
+        'template_id': templateId,
+        'user_id': userId,
+        'template_params': {
+          'user_name': name,
+          'user_email': email,
+          'seller_email': selleremail,
+          'textbook_name': textbook,
+        }
+      }),
+    );
 
-    try {
-      final sendReport = await send(message, smtpServer);
-      print('Message sent: ' +
-          sendReport.toString()); //print if the email is sent
-      return "Message sent sucessfully";
-    } on MailerException catch (e) {
-      print('Message not sent. \n' +
-          e.toString()); //print if the email is not sent
-      return e.toString();
-      // e.toString() will show why the email is not sending
-    }
+    print(response.body);
   }
 
   void showDialogBox(String index) async {
@@ -286,8 +285,15 @@ class _ResultsPageState extends State<ResultsPage> {
               ),
               TextButton(
                 //textColor: Colors.black,
-                onPressed: () {
-                  sendEmail(index);
+                onPressed: () async {
+                  await getUsers();
+                  sendEmail(
+                      name: GetFullName(fullName: userreference[0])
+                          .toString(), //current user name
+                      email: "HofBookNook@gmail.com", // user's email address
+                      textbook: 'Unavailable.', //when api is implemented
+                      selleremail:
+                          "bbaptista1@pride.hofstra.edu"); // seller's email address
                   Navigator.of(context).pop();
                 },
                 child: Text('SEND EMAIL'),
