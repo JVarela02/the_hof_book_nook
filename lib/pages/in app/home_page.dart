@@ -233,6 +233,41 @@ class _ResultsPageState extends State<ResultsPage> {
         );
   }
 
+  Future<String> sendEmail(String index) async {
+    final smtpServer = gmail('HofBookNook@gmail.com', 'Password190!');
+    final email = GetEmail(sellerEmail: index);
+    getUsers();
+    // Creating the Gmail server
+
+    // Create our email message.
+    final message = Message()
+      ..from = Address('HofBookNook@gmail.com')
+      ..recipients.add(email) //recipent email
+      ..subject =
+          'Someone is interested in your Textbook!' //subject of the email
+      ..text =
+          // ignore: prefer_interpolation_to_compose_strings
+          'Hello!\n\n' +
+              'is interested in purchasing your copy of ' +
+              GetFullName(fullName: userreference[0])
+                  .toString() + // Add textbook title
+              ". Please let them know if it is still available by emailing them at " +
+              user.email! +
+              "! \n\nThank you,\n Hof Book Nook Team"; //body of the email
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' +
+          sendReport.toString()); //print if the email is sent
+      return "Message sent sucessfully";
+    } on MailerException catch (e) {
+      print('Message not sent. \n' +
+          e.toString()); //print if the email is not sent
+      return e.toString();
+      // e.toString() will show why the email is not sending
+    }
+  }
+
   void showDialogBox(String index) async {
     showDialog(
       context: context,
@@ -252,40 +287,8 @@ class _ResultsPageState extends State<ResultsPage> {
               TextButton(
                 //textColor: Colors.black,
                 onPressed: () {
-                  Future<String> sendEmail() async {
-                    final smtpServer =
-                        gmail('HofBookNook@gmail.com', 'Password190!');
-                    final email = GetEmail(sellerEmail: index);
-                    // Creating the Gmail server
-
-                    // Create our email message.
-                    final message = Message()
-                      ..from = Address('HofBookNook@gmail.com')
-                      ..recipients.add(email) //recipent email
-                      ..subject =
-                          'Someone is interested in your Textbook!' //subject of the email
-                      ..text =
-                          // ignore: prefer_interpolation_to_compose_strings
-                          'Hello!\n\n' +
-                              'is interested in purchasing your copy of ' +
-                              GetFullName(fullName: userreference[0])
-                                  .toString() + // Add textbook title
-                              ". Please let them know if it is still available by emailing them at " +
-                              user.email! +
-                              "! \n\nThank you,\n Hof Book Nook Team"; //body of the email
-
-                    try {
-                      final sendReport = await send(message, smtpServer);
-                      print('Message sent: ' +
-                          sendReport.toString()); //print if the email is sent
-                      return "Message sent sucessfully";
-                    } on MailerException catch (e) {
-                      print('Message not sent. \n' +
-                          e.toString()); //print if the email is not sent
-                      return e.toString();
-                      // e.toString() will show why the email is not sending
-                    }
-                  }
+                  sendEmail(index);
+                  Navigator.of(context).pop();
                 },
                 child: Text('SEND EMAIL'),
               ),
