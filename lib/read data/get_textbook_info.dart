@@ -78,3 +78,29 @@ class GetCondition extends StatelessWidget {
     );
   }
 }
+
+class GetEmail extends StatelessWidget {
+  final String sellerEmail;
+
+  GetEmail({required this.sellerEmail});
+
+  @override
+  Widget build(BuildContext context) {
+
+    //get the collection
+    CollectionReference textbooks = FirebaseFirestore.instance.collection('textbooks');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: textbooks.doc(sellerEmail).get(),
+      builder: ((context, snapshot) 
+    {
+      if(snapshot.connectionState == ConnectionState.done) {
+        Map<String,dynamic> data = 
+          snapshot.data!.data() as Map<String, dynamic>;
+        return Text('${data['Seller']} ',);
+      }
+      return Text('Loading ...');
+    }),
+    );
+  }
+}

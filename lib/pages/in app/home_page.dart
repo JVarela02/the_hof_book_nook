@@ -11,6 +11,7 @@ import 'package:the_hof_book_nook/read%20data/get_account_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:the_hof_book_nook/read%20data/get_textbook_info.dart';
+import 'package:the_hof_book_nook/read%20data/get_account_info.dart';
 import '../sign ins/login_page.dart';
 import '../sign ins/register_page.dart';
 
@@ -171,19 +172,11 @@ class _HomePageState extends State<HomePage> {
               width: 100,
               child: ElevatedButton( 
                 onPressed: 
-                // searchMaterial(),
                    () {
                     var route = MaterialPageRoute(
                       builder:(BuildContext context) => ResultsPage(dropdownValue: dropdownValue, searchCriteria: _searchController.text.toString()),
                       );
                     Navigator.of(context).push(route);
-                    // Navigator.push(
-                    //   context, 
-                    //      MaterialPageRoute(
-                    //         builder: (context) {
-                    //         return MyListingsPage();
-                    //        },
-                    //      ),);
                     },
                 child: Text("Search",
                   style: TextStyle(color: Colors.white),
@@ -217,7 +210,7 @@ class _HomePageState extends State<HomePage> {
 
    List<String> searchRefernces = []; 
   
-  
+
    //get texbooks
    Future getTextbookResults() async {
     if(widget.dropdownValue == "ISBN"){
@@ -293,8 +286,12 @@ class _HomePageState extends State<HomePage> {
                );
             }
             else{
-              print("No Results found" + searchRefernces[index]);
-              return SizedBox(child: Text("No Results Were Found"));
+              return ColoredBox(
+                color: Color.fromARGB(255, 60, 95, 42),
+                child: SizedBox(height: 23, width: 67,),
+
+                //child: Text("No Results Were Found")
+                );
             }
             }),);
           },
