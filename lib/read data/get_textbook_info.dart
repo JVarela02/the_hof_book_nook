@@ -8,21 +8,22 @@ class GetTextbook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //get the collection
-    CollectionReference textbooks = FirebaseFirestore.instance.collection('textbooks');
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
 
     return FutureBuilder<DocumentSnapshot>(
       future: textbooks.doc(textbookForSale).get(),
-      builder: ((context, snapshot) 
-    {
-      if(snapshot.connectionState == ConnectionState.done) {
-        Map<String,dynamic> data = 
-          snapshot.data!.data() as Map<String, dynamic>;
-        return Text('${data['ISBN']} ',);
-      }
-      return Text('Loading ...');
-    }),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            '${data['ISBN']} ',
+          );
+        }
+        return Text('Loading ...');
+      }),
     );
   }
 }
@@ -34,21 +35,27 @@ class GetPrice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //get the collection
-    CollectionReference textbooks = FirebaseFirestore.instance.collection('textbooks');
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
 
     return FutureBuilder<DocumentSnapshot>(
       future: textbooks.doc(priceForSale).get(),
-      builder: ((context, snapshot) 
-    {
-      if(snapshot.connectionState == ConnectionState.done) {
-        Map<String,dynamic> data = 
-          snapshot.data!.data() as Map<String, dynamic>;
-        return Text("\$" + data['Price'],);
-      }
-      return Text('Loading ...');
-    }),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          bool InNegotiations = data['InNegotiations'];
+          if (!InNegotiations) {
+            return Text(
+              "\$" + data['Price'],
+            );
+          } else {
+            return Text('In Negotiaitons');
+          }
+        }
+        return Text('Loading ...');
+      }),
     );
   }
 }
@@ -60,21 +67,22 @@ class GetCondition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //get the collection
-    CollectionReference textbooks = FirebaseFirestore.instance.collection('textbooks');
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
 
     return FutureBuilder<DocumentSnapshot>(
       future: textbooks.doc(conditionForSale).get(),
-      builder: ((context, snapshot) 
-    {
-      if(snapshot.connectionState == ConnectionState.done) {
-        Map<String,dynamic> data = 
-          snapshot.data!.data() as Map<String, dynamic>;
-        return Text('${data['Condition']} ',);
-      }
-      return Text('Loading ...');
-    }),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            '${data['Condition']} ',
+          );
+        }
+        return Text('Loading ...');
+      }),
     );
   }
 }
@@ -86,21 +94,49 @@ class GetEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //get the collection
-    CollectionReference textbooks = FirebaseFirestore.instance.collection('textbooks');
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
 
     return FutureBuilder<DocumentSnapshot>(
       future: textbooks.doc(sellerEmail).get(),
-      builder: ((context, snapshot) 
-    {
-      if(snapshot.connectionState == ConnectionState.done) {
-        Map<String,dynamic> data = 
-          snapshot.data!.data() as Map<String, dynamic>;
-        return Text('${data['Seller']} ',);
-      }
-      return Text('Loading ...');
-    }),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            '${data['Seller']} ',
+          );
+        }
+        return Text('Loading ...');
+      }),
+    );
+  }
+}
+
+class GetNegotiations extends StatelessWidget {
+  final String negotiations;
+
+  GetNegotiations({required this.negotiations});
+
+  @override
+  Widget build(BuildContext context) {
+    //get the collection
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: textbooks.doc(negotiations).get(),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            '${data['InNegotiations']} ',
+          );
+        }
+        return Text('Loading ...');
+      }),
     );
   }
 }
