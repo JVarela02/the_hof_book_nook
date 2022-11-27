@@ -265,9 +265,55 @@ class _ResultsPageState extends State<ResultsPage> {
     );
 
     print(response.body);
+    showEmailResponseDialogBox();
   }
 
-  void showDialogBox(String index) async {
+  void showEmailResponseDialogBox() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Expanded(
+          child: AlertDialog(
+            title: Text('Email Sent!'),
+            content: Text('The email was successfully sent to the buyer.'),
+            actions: [
+              TextButton(
+                //textColor: Colors.black,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OKAY'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future showDialogBox(String index) async {
+    var collection = FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: user.email);
+    var querySnapshot = await collection.get();
+    var finalName = "";
+    for (var queryDocumentSnapshot in querySnapshot.docs) {
+      Map<String, dynamic> data = queryDocumentSnapshot.data();
+      var firstName = data['first name'];
+      var lastName = data['last name'];
+      String fullName = firstName + " " + lastName;
+      finalName = fullName;
+    }
+
+    var sellercollection =
+        FirebaseFirestore.instance.collection('textbooks').doc(index);
+    var querySellerSnapshot = await sellercollection.get();
+    var SellerEmail = "";
+    Map<String, dynamic> data = querySellerSnapshot.data()!;
+    String FullEmail = data['Seller'];
+    SellerEmail = FullEmail;
+    print(FullEmail);
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -288,12 +334,10 @@ class _ResultsPageState extends State<ResultsPage> {
                 onPressed: () async {
                   await getUsers();
                   sendEmail(
-                      name: GetFullName(fullName: userreference[0])
-                          .toString(), //current user name
-                      email: "HofBookNook@gmail.com", // user's email address
+                      name: finalName, //current user name
+                      email: user.email.toString(), // user's email address
                       textbook: 'Unavailable.', //when api is implemented
-                      selleremail:
-                          "bbaptista1@pride.hofstra.edu"); // seller's email address
+                      selleremail: SellerEmail); // seller's email address
                   Navigator.of(context).pop();
                 },
                 child: Text('SEND EMAIL'),
@@ -307,6 +351,10 @@ class _ResultsPageState extends State<ResultsPage> {
 
   //get texbooks
   Future getTextbookResults() async {
+    if (widget.dropdownValue == "Search Type") {
+      Navigator.of(context).pop();
+      HomePage();
+    }
     if (widget.dropdownValue == "ISBN") {
       await FirebaseFirestore.instance
           .collection('textbooks')
@@ -321,7 +369,6 @@ class _ResultsPageState extends State<ResultsPage> {
             ),
           );
     }
-    ;
     if (widget.dropdownValue == "Author") {
       await FirebaseFirestore.instance
           .collection('textbooks')
@@ -383,8 +430,9 @@ class _ResultsPageState extends State<ResultsPage> {
                   subtitle:
                       GetCondition(conditionForSale: searchRefernces[index]),
                   trailing: GetPrice(priceForSale: searchRefernces[index]),
-                  onTap: () => showDialogBox(searchRefernces[
-                      index]), // Will be used for "In Negotiations" if done
+                  onTap: () => {
+                    showDialogBox(searchRefernces[index])
+                  }, // Will be used for "In Negotiations" if done
                 );
               } else {
                 print("No Results found" + searchRefernces[index]);
