@@ -40,13 +40,17 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
   }
 
 
-  Future textbookUpload() async {
+  Future checkInfo(String tTitle, String tAuthor, String tDescription, String tCover) async {
     if (isbnLengthCorrect()) {
       textbookToFirebase(
         user.email.toString(),
         _isbnInputController.text.toString(),
         conditionValue,
         _priceController.text.toString(),
+        tDescription,
+        tTitle,
+        tAuthor,
+        tCover
       );
       showDialog(
           context: context,
@@ -70,10 +74,13 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
   }
 
   Future textbookToFirebase(String Txtseller, String ISBNnumber,
-      String Txtcondition, String Txtprice) async {
+      String Txtcondition, String Txtprice, String description, String title, String author, String poster) async {
     await FirebaseFirestore.instance.collection("textbooks").add({
       'Seller': Txtseller,
       'ISBN': ISBNnumber,
+      'Title' : title,
+      'Author' : author,
+      'Cover' : poster,
       'Condition': Txtcondition,
       'Price': Txtprice,
       'InNegotiations': false,
@@ -81,10 +88,8 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
   }
 
   Future getDetails() async {
-    await APIRouter().getTextbook(conditionValue);
-    List<Textbook> txts;
-    
-
+    Textbook T = await APIRouter().getTextbook(_isbnInputController.text);
+    checkInfo(T.title, T.authors, T.description, T.image);
   }
 
   @override
@@ -170,7 +175,7 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
               const SizedBox(height: 20),
 
               ElevatedButton(
-                onPressed: textbookUpload,
+                onPressed: getDetails,
                 child: Container(
                   height: 50,
                   width: 110,

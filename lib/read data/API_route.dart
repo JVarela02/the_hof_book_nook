@@ -7,21 +7,22 @@ import 'dart:convert';
 class APIRouter
 {
 
-  Future<List<Textbook>> getTextbook(String query) async
+  Future<Textbook> getTextbook(String query) async
   {
     var result = await http.get(Uri.parse("https://www.googleapis.com/books/v1/volumes?q=" + query + "&maxResults=1"));
     var response = json.decode(result.body)['items'] as List<dynamic>;
-    print(response[0]);
+    print("API Call: https://www.googleapis.com/books/v1/volumes?q=" + query + "&maxResults=1");
+    print(response);
     // print(response.map((e) => e['volumeInfo']['title']));
     // print(response.map((e) => e['volumeInfo']['authors'][0]));
     // print(response.map((e) => e['volumeInfo']['description']));
 
-    print(response.map((e) => e['volumeInfo']['imageLinks']['smallThumbnail']));
+    //print(response.map((e) => e['volumeInfo']['imageLinks']['smallThumbnail']));
     return response.map((e) => Textbook(e['volumeInfo']['title'] ,
         e['volumeInfo']['authors'][0], 
         e['volumeInfo']['description'],
         e['volumeInfo']['imageLinks']['smallThumbnail'] 
-        )).toList();
+        )).toList()[0];
   }
 }
 

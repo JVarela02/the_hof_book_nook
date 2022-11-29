@@ -88,6 +88,132 @@ class GetCondition extends StatelessWidget {
   }
 }
 
+class GetTitle extends StatelessWidget {
+  final String titleForSale;
+
+  GetTitle({required this.titleForSale});
+
+  @override
+  Widget build(BuildContext context) {
+    //get the collection
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: textbooks.doc(titleForSale).get(),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            '${data['Title']} ',
+          );
+        }
+        return Text('Loading ...');
+      }),
+    );
+  }
+}
+
+class GetAuthor extends StatelessWidget {
+  final String authorForSale;
+
+  GetAuthor({required this.authorForSale});
+
+  @override
+  Widget build(BuildContext context) {
+    //get the collection
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: textbooks.doc(authorForSale).get(),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            '${data['Author']} ',
+          );
+        }
+        return Text('Loading ...');
+      }),
+    );
+  }
+}
+
+class GetDescription extends StatelessWidget {
+  final String descriptionForSale;
+
+  GetDescription({required this.descriptionForSale});
+
+  @override
+  Widget build(BuildContext context) {
+    //get the collection
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: textbooks.doc(descriptionForSale).get(),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            '${data['Description']} ',
+          );
+        }
+        return Text('Loading ...');
+      }),
+    );
+  }
+}
+
+class GetCover extends StatelessWidget {
+  final String coverForSale;
+
+  GetCover({required this.coverForSale});
+
+  @override
+  Widget build(BuildContext context) {
+    //get the collection
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: textbooks.doc(coverForSale).get(),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            '${data['Cover']} ',
+          );
+        }
+        return Text('Loading ...');
+      }),
+    );
+  }
+}
+
+// class GetImage extends StatelessWidget{
+//   final String imageforSale;
+//   GetImage({required this.imageforSale});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     Future getURL() async{
+//       CollectionReference textbooks =
+//         FirebaseFirestore.instance.collection('textbooks');
+//       var URL = "";
+//       var querySnapshot = await textbooks.doc(imageforSale).get();
+
+//     }
+    
+//   }
+  
+// }
+
 class GetEmail extends StatelessWidget {
   final String sellerEmail;
 

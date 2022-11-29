@@ -95,6 +95,7 @@ class _MyListingsPageState extends State<MyListingsPage> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,10 +198,9 @@ class _MyListingsPageState extends State<MyListingsPage> {
                   itemBuilder: ((context, index) {
                     if (myListingRefernces.isNotEmpty) {
                       return ListTile(
-                        leading: Icon(Icons
-                            .camera_alt_rounded), // This will turn into photo of textbook
-                        title: GetTextbook(
-                          textbookForSale: myListingRefernces[index],
+                        //leading: Image.network(coverURL()),// This will turn into photo of textbook
+                        title: GetTitle(
+                          titleForSale: myListingRefernces[index],
                         ), //Once API is added this would turn into Title
                         subtitle:
                             GetPrice(priceForSale: myListingRefernces[index]),
