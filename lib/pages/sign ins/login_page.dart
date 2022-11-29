@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
  
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,28 +19,59 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
  
   // text controllers
-  final _emailController = TextEditingController();
+  final _loginController = TextEditingController();
   final _passwordController = TextEditingController();
  
   Future signIn() async{
-
-    try {
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
-    email: _emailController.text.trim(),
-    password: _passwordController.text.trim()
-    );
-} on Exception catch (e) {
-  showDialog(context: context, builder: (context){
-        return const AlertDialog(
-          content: Text("Wrong Password Entered"),
-        );
+    if(_loginController.text.contains("@pride.hofstra.edu"))
+      {try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _loginController.text.trim(),
+          password: _passwordController.text.trim()
+          );
+        } on Exception catch (e) {
+        showDialog(context: context, builder: (context){
+              return const AlertDialog(
+                content: Text("No matching email and password was found"),
+              );
+            });
+      }}
+    if(_loginController.text.toLowerCase().contains("h7")){
+      var collection = FirebaseFirestore.instance
+        .collection('users')
+        .where('username', isEqualTo: _loginController.text.trim());
+        var querySnapshot = await collection.get();
+        var emailLogin = "";
+      for (var queryDocumentSnapshot in querySnapshot.docs) {
+      Map<String, dynamic> data = queryDocumentSnapshot.data();
+      var emailAdd = data['email'];
+      emailLogin = emailAdd;
+      } 
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailLogin,
+          password: _passwordController.text.trim()
+          );
+        } on Exception catch (e) {
+        showDialog(context: context, builder: (context){
+              return const AlertDialog(
+                content: Text("No matching email and password was found"),
+              );
+            });
+      }
+    }
+    else{
+        showDialog(context: context, builder: (context){
+              return const AlertDialog(
+                content: Text("Please enter a valid username/email"),
+              );
       });
-}
-  } 
+    } 
+  }  
  
   @override
   void dispose() {
-    _emailController.dispose();
+    _loginController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -114,10 +146,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left:6.0),
                     child: TextField(
-                      controller: _emailController,
+                      controller: _loginController,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Pride Email",
+                        hintText: "Pride Email or H700#",
                       ),
                     ),
                   ),

@@ -426,9 +426,9 @@ class _ResultsPageState extends State<ResultsPage> {
                 return ListTile(
                   leading: Icon(Icons
                       .camera_alt_rounded), // This will turn into photo of textbook
-                  title: GetTextbook(
-                    textbookForSale: searchRefernces[index],
-                  ), //Once API is added this would turn into Title
+                  title: GetTitle(
+                    titleForSale: searchRefernces[index],
+                  ), 
                   subtitle:
                       GetCondition(conditionForSale: searchRefernces[index]),
                   trailing: GetPrice(priceForSale: searchRefernces[index]),
