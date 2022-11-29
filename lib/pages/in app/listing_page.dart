@@ -54,7 +54,12 @@ class _MyListingsPageState extends State<MyListingsPage> {
                   document.update({
                     'InNegotiations': true,
                   });
-                  Navigator.of(context).pop();
+                  Navigator.popUntil(context, (route) => false);
+                  Navigator.push(context,MaterialPageRoute(
+                    builder: (context) {
+                    return MyListingsPage();
+                    },
+                  ),);
                 },
                 child: Text('CHANGE TO \'In Negotiations\''),
               ),
@@ -67,7 +72,12 @@ class _MyListingsPageState extends State<MyListingsPage> {
                   document.update({
                     'InNegotiations': false,
                   });
-                  Navigator.of(context).pop();
+                  Navigator.popUntil(context, (route) => false);
+                  Navigator.push(context,MaterialPageRoute(
+                    builder: (context) {
+                    return MyListingsPage();
+                    },
+                  ),);
                 },
                 child: Text('RESET STATUS'),
               ),
@@ -138,6 +148,7 @@ class _MyListingsPageState extends State<MyListingsPage> {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (BuildContext context) {
                       return HomePage();
@@ -160,6 +171,7 @@ class _MyListingsPageState extends State<MyListingsPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (BuildContext context) {
                       return accountPage();

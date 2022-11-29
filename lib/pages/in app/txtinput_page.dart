@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:the_hof_book_nook/read%20data/API_route.dart';
 
 class TextbookInputPage extends StatefulWidget {
   const TextbookInputPage({super.key});
@@ -14,8 +15,8 @@ class TextbookInputPage extends StatefulWidget {
 class _TextbookInputPageState extends State<TextbookInputPage> {
   final user = FirebaseAuth.instance.currentUser!;
 
-  List<String> items = <String>["Like New", "Slightly Used", "Acceptable"];
-  String dropdownValue = "Condition";
+  List<String> items = <String>["Condition","Like New", "Slightly Used", "Acceptable"];
+  String conditionValue = "Condition";
 
   // input controllers
   final _isbnInputController = TextEditingController();
@@ -31,30 +32,20 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
   }
 
   bool isbnLengthCorrect() {
-    if (_isbnInputController.text.toString().trim().length == 13 ||
-        _isbnInputController.text.toString().length == 10) {
+    if (_isbnInputController.text.toString().trim().length == 13) {
       return true;
     } else {
       return false;
     }
   }
 
-  bool conditionCorrect() {
-    if (_conditionController.text.toString().toLowerCase() == "like new" ||
-        _conditionController.text.toString().toLowerCase() == "slightly used" ||
-        _conditionController.text.toString().toLowerCase() == "acceptable") {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   Future textbookUpload() async {
-    if (isbnLengthCorrect() && conditionCorrect()) {
+    if (isbnLengthCorrect()) {
       textbookToFirebase(
         user.email.toString(),
         _isbnInputController.text.toString(),
-        _conditionController.text.toLowerCase(),
+        conditionValue,
         _priceController.text.toString(),
       );
       showDialog(
@@ -65,33 +56,13 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
             );
           });
     } else {
-      if (isbnLengthCorrect() && !conditionCorrect()) {
+      if (!isbnLengthCorrect()){ 
         showDialog(
             context: context,
             builder: (context) {
               return const AlertDialog(
                 content: Text(
-                    "Condition is not correct. Please make sure it says either 'like new', 'slightly used', or 'acceptable' and try again"),
-              );
-            });
-      }
-      if (!isbnLengthCorrect() && conditionCorrect()) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                content: Text(
-                    "ISBN number is not valid. Please make sure that the length is either 10 or 13 characters long and try again"),
-              );
-            });
-      }
-      if (!isbnLengthCorrect() && !conditionCorrect()) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                content: Text(
-                    "ISBN number and Condition are not valid. Please make sure it says either 'like new', 'slightly used', or 'acceptable' and that the length is either 10 or 13 characters long and try again "),
+                    "ISBN number is not correct, please make sure the length is 13 characters long and try again "),
               );
             });
       }
@@ -107,6 +78,13 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
       'Price': Txtprice,
       'InNegotiations': false,
     });
+  }
+
+  Future getDetails() async {
+    await APIRouter().getTextbook(conditionValue);
+    List<Textbook> txts;
+    
+
   }
 
   @override
@@ -126,23 +104,6 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // DropdownButton<String>(
-              //   value: dropdownValue,
-              //   icon: const Icon(Icons.keyboard_arrow_down),
-              //   onChanged:
-              //   (String? Newalue) {
-              //     // This is called when the user selects an item.
-              //       setState(() {
-              //         dropdownValue = Newalue!;
-              //       });
-              //   },
-              //   items:
-              //   items.map<DropdownMenuItem<String>>((String value) {
-              //   return DropdownMenuItem<String>(
-              //     value: value,
-              //     child: Text(value),
-              //   );}).toList(),
-              //   ),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -166,28 +127,23 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 207, 230, 247),
-                    border: Border.all(
-                        color: Color.fromARGB(255, 235, 235, 235), width: 3),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 6.0),
-                    child: TextField(
-                      controller: _conditionController,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText:
-                            "Condition (Like New, Slightly Used, Acceptable)",
-                      ),
-                    ),
-                  ),
+              DropdownButton<String>(
+                value: conditionValue,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                onChanged:
+                (String? Newalue) {
+                  /// This is called when the user selects an item.
+                    setState(() {
+                      conditionValue = Newalue!;
+                    });
+                },
+                items:
+                items.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );}).toList(),
                 ),
-              ),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),

@@ -8,6 +8,7 @@ import 'package:the_hof_book_nook/pages/in%20app/listing_page.dart';
 import 'package:the_hof_book_nook/pages/in%20app/removetxt_page.dart';
 import 'package:the_hof_book_nook/pages/in%20app/txtinput_page.dart';
 import 'package:the_hof_book_nook/pages/sign%20ins/login_page.dart';
+import 'package:the_hof_book_nook/read data/get_account_info.dart';
 
 class accountPage extends StatefulWidget {
   const accountPage({super.key});
@@ -25,7 +26,7 @@ class _accountPageState extends State<accountPage> {
   List<String> fullNames = [];
 
   //get fullNames
-  Future getfullName() async {
+   Future getfullName() async {
     await FirebaseFirestore.instance.collection('users')
     .where('email', isEqualTo: user.email)
     .get().then(
@@ -109,6 +110,7 @@ class _accountPageState extends State<accountPage> {
                   children: <Widget>[
                     ElevatedButton(
                       onPressed: (){
+                        Navigator.pop(context);
                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
                        return HomePage();
                         }));
@@ -117,6 +119,7 @@ class _accountPageState extends State<accountPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        Navigator.pop(context);
                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
                        return MyListingsPage();
                         }));
@@ -138,7 +141,11 @@ class _accountPageState extends State<accountPage> {
             ),
            
 
-          SizedBox(height: 30,),
+          SizedBox(height: 15,),
+
+          Text("Signed in as: " + user.email!),
+
+          SizedBox(height:30),
 
             SizedBox(
               height: 60,

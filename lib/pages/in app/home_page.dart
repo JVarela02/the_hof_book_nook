@@ -97,6 +97,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (BuildContext context) {
                         return MyListingsPage();
@@ -106,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (BuildContext context) {
                         return accountPage();
