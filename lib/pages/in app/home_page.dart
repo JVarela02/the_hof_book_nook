@@ -316,6 +316,15 @@ class _ResultsPageState extends State<ResultsPage> {
     SellerEmail = FullEmail;
     print(FullEmail);
 
+    var namecollection =
+        FirebaseFirestore.instance.collection('textbooks').doc(index);
+    var queryNameSnapshot = await namecollection.get();
+    var txtName = "";
+    Map<String, dynamic> data2 = querySellerSnapshot.data()!;
+    String textbookName = data2['Title'];
+    txtName = textbookName;
+    print(textbookName);
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -338,7 +347,7 @@ class _ResultsPageState extends State<ResultsPage> {
                   sendEmail(
                       name: finalName, //current user name
                       email: user.email.toString(), // user's email address
-                      textbook: 'Unavailable.', //when api is implemented
+                      textbook: txtName, //when api is implemented
                       selleremail: SellerEmail); // seller's email address
                   Navigator.of(context).pop();
                 },

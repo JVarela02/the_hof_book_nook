@@ -23,8 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
  
   Future signIn() async{
-    if(_loginController.text.contains("@pride.hofstra.edu"))
-      {try {
+    if(_loginController.text.contains("pride.hofstra.edu"))
+      {print("logging in with email");
+        try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _loginController.text.trim(),
           password: _passwordController.text.trim()
@@ -36,37 +37,40 @@ class _LoginPageState extends State<LoginPage> {
               );
             });
       }}
-    if(_loginController.text.toLowerCase().contains("h7")){
-      var collection = FirebaseFirestore.instance
-        .collection('users')
-        .where('username', isEqualTo: _loginController.text.trim());
-        var querySnapshot = await collection.get();
-        var emailLogin = "";
-      for (var queryDocumentSnapshot in querySnapshot.docs) {
-      Map<String, dynamic> data = queryDocumentSnapshot.data();
-      var emailAdd = data['email'];
-      emailLogin = emailAdd;
-      } 
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailLogin,
-          password: _passwordController.text.trim()
-          );
-        } on Exception catch (e) {
-        showDialog(context: context, builder: (context){
-              return const AlertDialog(
-                content: Text("No matching email and password was found"),
+      else
+        {if(_loginController.text.toLowerCase().contains("h7")){
+          print("Logging in with username");
+          var collection = FirebaseFirestore.instance
+            .collection('users')
+            .where('username', isEqualTo: _loginController.text.trim());
+            var querySnapshot = await collection.get();
+            var emailLogin = "";
+          for (var queryDocumentSnapshot in querySnapshot.docs) {
+          Map<String, dynamic> data = queryDocumentSnapshot.data();
+          var emailAdd = data['email'];
+          emailLogin = emailAdd;
+          } 
+          try {
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+              email: emailLogin,
+              password: _passwordController.text.trim()
               );
-            });
-      }
-    }
-    else{
-        showDialog(context: context, builder: (context){
-              return const AlertDialog(
-                content: Text("Please enter a valid username/email"),
-              );
-      });
-    } 
+            } on Exception catch (e) {
+            showDialog(context: context, builder: (context){
+                  return const AlertDialog(
+                    content: Text("No matching email and password was found"),
+                  );
+                });
+          }
+        }
+        else{
+            print("Error in Logging in");
+            showDialog(context: context, builder: (context){
+                  return const AlertDialog(
+                    content: Text("Please enter a valid username/email"),
+                  );
+          });
+        }} 
   }  
  
   @override
