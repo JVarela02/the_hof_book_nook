@@ -65,9 +65,7 @@ class _RemoveTextbookPageState extends State<RemoveTextbookPage> {
                       return ListTile(
                           leading: const Icon(Icons
                               .camera_alt_rounded), // This will turn into photo of textbook
-                          title: GetTextbook(
-                            textbookForSale: myListingRefernces[index],
-                          ), //Once API is added this would turn into Title
+                          title: GetTitle(titleForSale: myListingRefernces[index],),
                           subtitle:
                               GetPrice(priceForSale: myListingRefernces[index]),
                           trailing: Icon(Icons.delete_forever_outlined),
