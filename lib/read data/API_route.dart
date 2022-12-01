@@ -18,11 +18,17 @@ class APIRouter
     // print(response.map((e) => e['volumeInfo']['description']));
 
     //print(response.map((e) => e['volumeInfo']['imageLinks']['smallThumbnail']));
-    return response.map((e) => Textbook(e['volumeInfo']['title'] ,
+    try{return response.map((e) => Textbook(e['volumeInfo']['title'] ,
         e['volumeInfo']['authors'][0], 
         e['volumeInfo']['description'],
         e['volumeInfo']['imageLinks']['smallThumbnail'] 
+        )).toList()[0];} catch(e){
+          return response.map((e) => Textbook(e['volumeInfo']['title'] ,
+        e['volumeInfo']['authors'][0], 
+        "Description was Unavailable",
+        e['volumeInfo']['imageLinks']['smallThumbnail'] 
         )).toList()[0];
+        }
   }
 }
 
