@@ -335,11 +335,13 @@ class _ResultsPageState extends State<ResultsPage> {
           child: AlertDialog(
             title: Text(txtAuthorName),
             //title: Text('Interested in this book?'),
-            content: Column(
-              children: [
-                Image.network(link),
-                Text(detailDescription + '\n \nInterested in this book? Email the seller of this book!'),
-              ],
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Image.network(link),
+                  Text(detailDescription + '\n \nInterested in this book? Email the seller of this book!'),
+                ],
+              ),
             ),
             actions: [
               TextButton(
