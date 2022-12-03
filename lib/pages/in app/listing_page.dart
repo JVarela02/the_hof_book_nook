@@ -198,12 +198,12 @@ class _MyListingsPageState extends State<MyListingsPage> {
                   itemBuilder: ((context, index) {
                     if (myListingRefernces.isNotEmpty) {
                       return ListTile(
-                        //leading: Image.network(coverURL()),// This will turn into photo of textbook
+                        leading: GetCover(coverForSale: myListingRefernces[index],),// This will turn into photo of textbook
                         title: GetTitle(
                           titleForSale: myListingRefernces[index],
-                        ), //Once API is added this would turn into Title
+                        ), 
                         subtitle:
-                            GetPrice(priceForSale: myListingRefernces[index]),
+                            GetPriceCondition(conpriceForSale: myListingRefernces[index]),
                         trailing: Icon(
                           Icons.square_outlined,
                         ),

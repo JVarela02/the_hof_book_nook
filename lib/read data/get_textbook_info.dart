@@ -88,6 +88,33 @@ class GetCondition extends StatelessWidget {
   }
 }
 
+class GetPriceCondition extends StatelessWidget {
+  final String conpriceForSale;
+
+  GetPriceCondition({required this.conpriceForSale});
+
+  @override
+  Widget build(BuildContext context) {
+    //get the collection
+    CollectionReference textbooks =
+        FirebaseFirestore.instance.collection('textbooks');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: textbooks.doc(conpriceForSale).get(),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            '\$ ${data['Price']} -- ${data['Condition']} ',
+          );
+        }
+        return Text('Loading ...');
+      }),
+    );
+  }
+}
+
 class GetTitle extends StatelessWidget {
   final String titleForSale;
 
@@ -186,9 +213,9 @@ class GetCover extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
-          return Text(
-            '${data['Cover']} ',
-          );
+          return //Text(
+            Image.network('${data['Cover']} '); //,
+          //);
         }
         return Text('Loading ...');
       }),
@@ -196,23 +223,6 @@ class GetCover extends StatelessWidget {
   }
 }
 
-// class GetImage extends StatelessWidget{
-//   final String imageforSale;
-//   GetImage({required this.imageforSale});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Future getURL() async{
-//       CollectionReference textbooks =
-//         FirebaseFirestore.instance.collection('textbooks');
-//       var URL = "";
-//       var querySnapshot = await textbooks.doc(imageforSale).get();
-
-//     }
-    
-//   }
-  
-// }
 
 class GetEmail extends StatelessWidget {
   final String sellerEmail;

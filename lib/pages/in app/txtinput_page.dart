@@ -79,6 +79,7 @@ class _TextbookInputPageState extends State<TextbookInputPage> {
       'Seller': Txtseller,
       'ISBN': ISBNnumber,
       'Title' : title,
+      'Description' : description,
       'Author' : author,
       'Cover' : poster,
       'Condition': Txtcondition,

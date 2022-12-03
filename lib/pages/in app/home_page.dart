@@ -323,6 +323,9 @@ class _ResultsPageState extends State<ResultsPage> {
     Map<String, dynamic> data2 = querySellerSnapshot.data()!;
     String textbookName = data2['Title'];
     txtName = textbookName;
+    String txtAuthorName = data2['Title'] + " By: " + data2['Author'];
+    String detailDescription = data2['Description'];
+    String link = data2['Cover'];
     print(textbookName);
 
     showDialog(
@@ -330,8 +333,14 @@ class _ResultsPageState extends State<ResultsPage> {
       builder: (BuildContext context) {
         return Expanded(
           child: AlertDialog(
-            title: Text('Interested in this book?'),
-            content: Text('Do you want to email the seller of this book?'),
+            title: Text(txtAuthorName),
+            //title: Text('Interested in this book?'),
+            content: Column(
+              children: [
+                Image.network(link),
+                Text(detailDescription + '\n \nInterested in this book? Email the seller of this book!'),
+              ],
+            ),
             actions: [
               TextButton(
                 //textColor: Colors.black,
@@ -433,8 +442,7 @@ class _ResultsPageState extends State<ResultsPage> {
             itemBuilder: ((context, index) {
               if (searchRefernces.isNotEmpty) {
                 return ListTile(
-                  leading: Icon(Icons
-                      .camera_alt_rounded), // This will turn into photo of textbook
+                  leading: GetCover(coverForSale: searchRefernces[index]), // This will turn into photo of textbook
                   title: GetTitle(
                     titleForSale: searchRefernces[index],
                   ), 
