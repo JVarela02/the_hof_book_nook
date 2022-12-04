@@ -23,11 +23,23 @@ class APIRouter
         e['volumeInfo']['description'],
         e['volumeInfo']['imageLinks']['smallThumbnail'] 
         )).toList()[0];} catch(e){
-          return response.map((e) => Textbook(e['volumeInfo']['title'] ,
+          try{return response.map((e) => Textbook(e['volumeInfo']['title'] ,
         e['volumeInfo']['authors'][0], 
         "Description was Unavailable",
         e['volumeInfo']['imageLinks']['smallThumbnail'] 
+        )).toList()[0];}catch(e){
+          try{return response.map((e) => Textbook(e['volumeInfo']['title'] ,
+        e['volumeInfo']['authors'][0], 
+        e['volumeInfo']['description'],
+        "https://books.google.com/books/content?id=zyTCAlFPjYC&printsec=frontcover&img=1&zoom=1&edge=curl&imgtk=AFLRE73AuY_TaGIi529M67qgjWVg2w3fzNQZd9tKzmlSo9RZnHZXPQ66-eHfBSVKwTrN4yjs0AH-sFmjLgC_WuTMI25NcdpztP-Uafs3JalOuGnZfnoIRyhrPknrsJErqk0u2Ykn7&source=gbs_api" 
+        )).toList()[0];}catch(e){
+        return response.map((e) => Textbook(e['volumeInfo']['title'] ,
+        e['volumeInfo']['authors'][0], 
+        "Description Unavailable",
+        "https://books.google.com/books/content?id=zyTCAlFPjYC&printsec=frontcover&img=1&zoom=1&edge=curl&imgtk=AFLRE73AuY_TaGIi529M67qgjWVg2w3fzNQZd9tKzmlSo9RZnHZXPQ66-eHfBSVKwTrN4yjs0AH-sFmjLgC_WuTMI25NcdpztP-Uafs3JalOuGnZfnoIRyhrPknrsJErqk0u2Ykn7&source=gbs_api" 
         )).toList()[0];
+        }
+        }
         }
   }
 }
