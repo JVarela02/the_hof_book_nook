@@ -105,9 +105,14 @@ class GetPriceCondition extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
-          return Text(
-            '\$ ${data['Price']} -- ${data['Condition']} ',
-          );
+          bool InNegotiations = data['InNegotiations'];
+          if (!InNegotiations) {
+            return Text(
+              '\$ ${data['Price']} -- ${data['Condition']} ',
+            );
+          } else {
+            return Text('In Negotiaitons');
+          }
         }
         return Text('Loading ...');
       }),
